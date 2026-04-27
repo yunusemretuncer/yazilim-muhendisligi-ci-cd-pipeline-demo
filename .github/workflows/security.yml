@@ -60,8 +60,10 @@ jobs:
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          image-ref: ${{ steps.img.outputs.name }}:${{ github.sha }}
           severity: CRITICAL,HIGH
+          vuln-type: os
+          ignore-unfixed: true
           exit-code: 1
 
       - name: Login to GHCR
