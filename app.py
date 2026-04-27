@@ -10,7 +10,8 @@ from flask import Flask, request
 app = Flask(__name__)
 
 # VULN #1: Hardcoded secret - gitleaks bunu commit'te yakalar
-
+AWS_ACCESS_KEY = "AKIAZ7K3YQXVN4PW2L5R"
+AWS_SECRET_KEY = "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"
 
 
 @app.route("/user")
@@ -20,7 +21,8 @@ def get_user():
     cur = conn.cursor()
 
     # VULN #2: SQL Injection - bandit B608 yakalar
-    cur.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+   query = "SELECT * FROM users WHERE id = " + user_id
+    cur.execute(query)
 
     return {"result": cur.fetchall()}
 
