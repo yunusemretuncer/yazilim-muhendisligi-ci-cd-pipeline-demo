@@ -46,7 +46,7 @@ jobs:
   # ---------- 4. Build & Container Scan + Push ----------
   build-and-push:
     name: 🐳 Build, Scan & Push
-    needs: [secrets, sast, deps]   # Üç gate de geçmeden buraya gelmez
+    needs: [secrets, sast, deps]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -54,8 +54,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set lowercase image name
+        id: img
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
       - name: Build image
-        run: docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} .
+        run: docker build -t ${{ steps.img.outputs.name }}:${{ github.sha }} .
 
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@master
@@ -74,4 +78,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push image
-        run: docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
+        run: docker push ${{ steps.img.outputs.name }}:${{ github.sha }}
