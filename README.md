@@ -1,0 +1,1 @@
+# yaz-l-m-m-hendisligi-CI-CD-pipeline-demo
