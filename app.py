@@ -11,8 +11,8 @@ from flask import Flask, request
 app = Flask(__name__)
 
 # VULN #1: Hardcoded secret
-AWS_ACCESS_KEY = "AKIA4QHZB5VTM8XNK3PR"
-AWS_SECRET_KEY = "j7Hk3PQm9bR2nT5wX8vC4dY6gZ1fA0eS+L/qNuVB"
+AWS_ACCESS_KEY = "AKIA6WPLF2QYVH9DJN5T"
+AWS_SECRET_KEY = "p8Mq2RtA5cE7uX1bN4kY+JfH3wD6sV0gZ9iLoTrB"
 
 
 @app.route("/user")
