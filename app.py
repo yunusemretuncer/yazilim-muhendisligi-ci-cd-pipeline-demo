@@ -11,8 +11,7 @@ from flask import Flask, request
 app = Flask(__name__)
 
 # VULN #1: Hardcoded secret
-AWS_ACCESS_KEY = "AKIA6WPLF2QYVH9DJN5T"
-AWS_SECRET_KEY = "p8Mq2RtA5cE7uX1bN4kY+JfH3wD6sV0gZ9iLoTrB"
+
 
 
 @app.route("/user")
@@ -22,8 +21,7 @@ def get_user():
     cur = conn.cursor()
 
     # VULN #2: SQL Injection
-    query = "SELECT * FROM users WHERE id = " + user_id
-    cur.execute(query)
+    cur.execute("SELECT * FROM users WHERE id = ?", (user_id,))
 
     return {"result": cur.fetchall()}
 
